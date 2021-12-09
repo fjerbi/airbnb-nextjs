@@ -48,7 +48,6 @@ export default function Home({ exploreData, cardsData }) {
           title="The Greatest Outdoors"
           description="Lrem Ipsum dolor"
           buttonText="Get Inspired"
-        
         />
       </main>
 
