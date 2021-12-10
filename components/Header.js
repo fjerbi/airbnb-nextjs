@@ -10,12 +10,15 @@ import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
+import { roundToNearestMinutes } from "date-fns";
+import { useRouter } from "next/dist/client/router";
 
-function Header() {
+function Header({placeholder}) {
   const [searchInput, setSearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [nbOfParticipants, setnNbOfParticipants] = useState(1);
+  const router = useRouter();
 
   const selectionRange = {
     startDate: startDate,
@@ -27,11 +30,21 @@ function Header() {
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
   };
-  const resetInput = () =>{
-    setSearchInput('')
-  }
+  const resetInput = () => {
+    setSearchInput("");
+  };
 
-
+  const search = () => {
+    router.push({
+      pathname: "/search",
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        nbOfParticipants,
+      },
+    });
+  };
 
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 p-5 bg-white shadow-md md:px-10 ">
@@ -42,6 +55,7 @@ function Header() {
           layout="fill"
           objectFit="contain"
           objectPosition="left"
+          onClick={() => router.push("/")}
         />
       </div>
       {/* middle - Search section*/}
@@ -51,7 +65,7 @@ function Header() {
           onChange={(e) => setSearchInput(e.target.value)}
           className="flex-grow pl-5 text-sm text-gray-600 placeholder-gray-400 bg-transparent outline-none "
           type="text"
-          placeholder="Start your search"
+          placeholder={placeholder || "Start your search"}
         />
         <SearchIcon className="hidden h-8 p-2 text-white bg-red-400 rounded-full cursor-pointer md:mx-2 md:inline-flex" />
       </div>
@@ -87,8 +101,12 @@ function Header() {
             />
           </div>
           <div className="flex ">
-            <button onClick={resetInput} className="flex-grow text-gray-500">Cancel</button>
-            <button className="flex-grow text-red-400">Search</button>
+            <button onClick={resetInput} className="flex-grow text-gray-500">
+              Cancel
+            </button>
+            <button onClick={search} className="flex-grow text-red-400">
+              Search
+            </button>
           </div>
         </div>
       )}
