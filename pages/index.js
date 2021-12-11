@@ -10,7 +10,7 @@ export default function Home({ exploreData, cardsData }) {
   return (
     <div>
       <Head>
-        <title>Campi</title>
+        <title>Airbnb</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
