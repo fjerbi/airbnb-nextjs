@@ -3,7 +3,9 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LargeCard from "../components/LargeCard";
+import MapIndex from "../components/MapIndex";
 import MediumCard from "../components/MediumCard";
+import Options from "../components/Options";
 import SmallCard from "../components/SmallCard";
 
 export default function Home({ exploreData, cardsData }) {
